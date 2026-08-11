@@ -1,6 +1,7 @@
 package com.srijon.library.service.impl;
 
 import com.srijon.library.dto.BookRequestDto;
+import com.srijon.library.dto.BookResponseDto;
 import com.srijon.library.entity.Book;
 import com.srijon.library.mapper.BookMapper;
 import com.srijon.library.repository.BookRepository;
@@ -19,10 +20,11 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public Book addBook(BookRequestDto bookRequestDto) {
+    public BookResponseDto addBook(BookRequestDto bookRequestDto) {
         Book saveBook = mapper.toEntity(bookRequestDto);
         saveBook.setAvailableCopies(saveBook.getTotalCopies());
 
-        return bookRepository.save(saveBook);
+        bookRepository.save(saveBook);
+        return mapper.toResponseDto(saveBook);
     }
 }

@@ -12,16 +12,16 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BookRequestDto {
 
-    @NotBlank
+    @NotBlank(message = "Title of book cannot be blank")
     private String title;
 
-    @NotBlank
+    @NotBlank(message = "The Author Name of the book must be mentioned")
     private String author;
 
-    @NotBlank
+    @NotBlank(message = "ISBN number cannot be blank or null")
     private String isbn;
 
-    @NotNull
+    @NotNull(message = "Publication year must be mentioned")
     private Integer publishedYear;
 
     @Min(1)
