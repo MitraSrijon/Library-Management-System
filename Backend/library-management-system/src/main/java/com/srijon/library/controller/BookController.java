@@ -5,11 +5,14 @@ import com.srijon.library.dto.BookResponseDto;
 import com.srijon.library.entity.Book;
 import com.srijon.library.service.BookService;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
@@ -20,9 +23,23 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    //Logic of adding the books inside our database
     @PostMapping
-    public BookResponseDto addBook(@Valid @RequestBody  BookRequestDto bookRequestDto){
-        return bookService.addBook(bookRequestDto);
+    public ResponseEntity<BookResponseDto> addBook(@Valid @RequestBody  BookRequestDto bookRequestDto){
+        BookResponseDto saveBook = bookService.addBook(bookRequestDto);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(saveBook);
+
+    }
+
+    //Logic of getting all the books
+    @GetMapping
+    public List<BookResponseDto> getAllBooks(){
+
+        return bookService.getAllBooks();
+
     }
 
 }
