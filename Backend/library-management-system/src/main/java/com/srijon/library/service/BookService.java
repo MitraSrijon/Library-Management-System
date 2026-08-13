@@ -8,10 +8,15 @@ import java.util.List;
 public interface BookService {
 
     //Logic of adding the books inside our database
-    public BookResponseDto addBook(BookRequestDto bookRequestDto);
+    BookResponseDto addBook(BookRequestDto bookRequestDto);
 
     //Logic of getting all the info of all the books present in our database
-    public List<BookResponseDto> getAllBooks();
+    List<BookResponseDto> getAllBooks();
 
+    //Searching a specific book by its id
+    BookResponseDto getBookById(Long id);
+
+    //Logic of updating a book
+    BookResponseDto updateBook(Long id , BookRequestDto bookRequestDto);
 
 }

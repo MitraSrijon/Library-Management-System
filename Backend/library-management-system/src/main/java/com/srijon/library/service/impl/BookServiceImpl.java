@@ -3,12 +3,14 @@ package com.srijon.library.service.impl;
 import com.srijon.library.dto.BookRequestDto;
 import com.srijon.library.dto.BookResponseDto;
 import com.srijon.library.entity.Book;
+import com.srijon.library.exception.BookNotFoundException;
 import com.srijon.library.mapper.BookMapper;
 import com.srijon.library.repository.BookRepository;
 import com.srijon.library.service.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService{
@@ -43,5 +45,50 @@ public class BookServiceImpl implements BookService{
                 .stream()
                 .map(mapper :: toResponseDto)
                 .toList();
+    }
+
+    //Searching a book with its specific ID
+    @Override
+    public BookResponseDto getBookById(Long id) {
+
+        Book book = bookRepository.findById(id)
+                .orElseThrow(
+                        () -> new BookNotFoundException("Book not found with ID : " + id)
+                );
+
+        return mapper.toResponseDto(book);
+    }
+
+    @Override
+    public BookResponseDto updateBook(Long id, BookRequestDto bookRequestDto) {
+
+        Book book = bookRepository.findById(id)
+                .orElseThrow(
+                        () -> new BookNotFoundException("Book not found with ID : " + id)
+                );
+
+        //Checking the borrowed copies
+        int borrowedCopies = book.getTotalCopies() - book.getAvailableCopies();
+
+        if (bookRequestDto.getTotalCopies() < borrowedCopies) {
+            throw new IllegalArgumentException(
+                    "Total copies cannot be less than borrowed copies"
+            );
+        }
+
+        //New available copies
+        int newAvailableCopies = bookRequestDto.getTotalCopies() - borrowedCopies;
+
+        //Updating all the values
+        book.setAuthor(bookRequestDto.getAuthor());
+        book.setTitle(bookRequestDto.getTitle());
+        book.setIsbn(bookRequestDto.getIsbn());
+        book.setTotalCopies(bookRequestDto.getTotalCopies());
+        book.setPublishedYear(bookRequestDto.getPublishedYear());
+        book.setAvailableCopies(newAvailableCopies);
+
+        Book updateBook = bookRepository.save(book);
+
+        return mapper.toResponseDto(updateBook);
     }
 }

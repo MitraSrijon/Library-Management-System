@@ -42,4 +42,21 @@ public class BookController {
 
     }
 
+    //Logic of getting the books with specific id
+    @GetMapping("/{id}")
+    public BookResponseDto getBookById(@PathVariable Long id){
+
+        return bookService.getBookById(id);
+    }
+
+    //Logic of updating a book info
+    @PutMapping("/{id}")
+    public BookResponseDto updateBook(
+            @PathVariable Long id,
+            @Valid @RequestBody BookRequestDto bookRequestDto
+    ){
+
+        return bookService.updateBook(id , bookRequestDto);
+
+    }
 }
