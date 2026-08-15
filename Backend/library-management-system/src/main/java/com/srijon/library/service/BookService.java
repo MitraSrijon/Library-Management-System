@@ -19,4 +19,7 @@ public interface BookService {
     //Logic of updating a book
     BookResponseDto updateBook(Long id , BookRequestDto bookRequestDto);
 
+    //Logic of deleting the book
+    void deleteBook(Long id);
+
 }

@@ -3,6 +3,7 @@ package com.srijon.library.service.impl;
 import com.srijon.library.dto.BookRequestDto;
 import com.srijon.library.dto.BookResponseDto;
 import com.srijon.library.entity.Book;
+import com.srijon.library.exception.BookDeletionException;
 import com.srijon.library.exception.BookNotFoundException;
 import com.srijon.library.mapper.BookMapper;
 import com.srijon.library.repository.BookRepository;
@@ -59,6 +60,7 @@ public class BookServiceImpl implements BookService{
         return mapper.toResponseDto(book);
     }
 
+    //Logic of updating a book
     @Override
     public BookResponseDto updateBook(Long id, BookRequestDto bookRequestDto) {
 
@@ -90,5 +92,25 @@ public class BookServiceImpl implements BookService{
         Book updateBook = bookRepository.save(book);
 
         return mapper.toResponseDto(updateBook);
+    }
+
+    //Logic of deleting a book
+    @Override
+    public void deleteBook(Long id) {
+
+        Book deleteBook = bookRepository.findById(id).orElseThrow(
+                () -> new BookNotFoundException("Book not found with ID : " + id)
+        );
+
+        int borrowedCopies = deleteBook.getTotalCopies() - deleteBook.getAvailableCopies();
+
+        if(borrowedCopies > 0) {
+            throw new BookDeletionException(
+                    "Cannot delete book because copies are currently borrowed"
+            );
+        }
+
+        bookRepository.delete(deleteBook);
+
     }
 }
