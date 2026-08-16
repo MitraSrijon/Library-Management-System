@@ -2,7 +2,8 @@ package com.srijon.library.service;
 
 import com.srijon.library.dto.BookRequestDto;
 import com.srijon.library.dto.BookResponseDto;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface BookService {
@@ -11,7 +12,7 @@ public interface BookService {
     BookResponseDto addBook(BookRequestDto bookRequestDto);
 
     //Logic of getting all the info of all the books present in our database
-    List<BookResponseDto> getAllBooks();
+    Page<BookResponseDto> getAllBooks(Pageable pageable);
 
     //Searching a specific book by its id
     BookResponseDto getBookById(Long id);
@@ -21,5 +22,8 @@ public interface BookService {
 
     //Logic of deleting the book
     void deleteBook(Long id);
+
+    //Searching the book by title
+    Page<BookResponseDto> searchBook(String title, Pageable pageable);
 
 }

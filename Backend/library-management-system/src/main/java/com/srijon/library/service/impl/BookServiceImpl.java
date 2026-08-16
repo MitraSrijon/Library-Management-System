@@ -9,7 +9,8 @@ import com.srijon.library.mapper.BookMapper;
 import com.srijon.library.repository.BookRepository;
 import com.srijon.library.service.BookService;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,16 +37,10 @@ public class BookServiceImpl implements BookService{
 
     //Getting all the books that are present in database
     @Override
-    public List<BookResponseDto> getAllBooks() {
+    public Page<BookResponseDto> getAllBooks(Pageable pageable) {
 
-        List<Book> books = bookRepository.findAll();
-
-        //Selects every book from books list , converts it into bookResponseDto and gives back
-        // a list of bookResponseDto object
-        return books
-                .stream()
-                .map(mapper :: toResponseDto)
-                .toList();
+        Page<Book> books = bookRepository.findAll(pageable);
+        return books.map(mapper :: toResponseDto);
     }
 
     //Searching a book with its specific ID
@@ -112,5 +107,13 @@ public class BookServiceImpl implements BookService{
 
         bookRepository.delete(deleteBook);
 
+    }
+
+    //Logic of searching books by title
+    @Override
+    public Page<BookResponseDto> searchBook(String title, Pageable pageable) {
+
+        Page<Book> books = bookRepository.findByTitleContainingIgnoreCase(title,pageable);
+        return books.map(mapper :: toResponseDto);
     }
 }

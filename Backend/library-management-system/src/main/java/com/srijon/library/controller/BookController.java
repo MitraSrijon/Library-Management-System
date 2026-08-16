@@ -6,11 +6,13 @@ import com.srijon.library.entity.Book;
 import com.srijon.library.service.BookService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.service.annotation.DeleteExchange;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @Slf4j
@@ -37,9 +39,10 @@ public class BookController {
 
     //Logic of getting all the books
     @GetMapping
-    public List<BookResponseDto> getAllBooks(){
+    public Page<BookResponseDto> getAllBooks(
+            @PageableDefault(size = 10) Pageable pageable){
 
-        return bookService.getAllBooks();
+        return bookService.getAllBooks(pageable);
 
     }
 
@@ -67,5 +70,15 @@ public class BookController {
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .build();
+    }
+
+    //Logic of searching a book bby its title
+    @GetMapping("/search")
+    public Page<BookResponseDto> searchBook(
+            @RequestParam String title,
+            Pageable pageable
+    ){
+
+        return bookService.searchBook(title, pageable);
     }
 }
