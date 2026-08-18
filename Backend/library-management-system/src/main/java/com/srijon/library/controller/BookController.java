@@ -72,13 +72,13 @@ public class BookController {
                 .build();
     }
 
-    //Logic of searching a book bby its title
+    //Logic of searching a book bby its title,author,isbn
     @GetMapping("/search")
     public Page<BookResponseDto> searchBook(
-            @RequestParam String title,
+            @RequestParam String query,
             Pageable pageable
     ){
 
-        return bookService.searchBook(title, pageable);
+        return bookService.searchBook(query, pageable);
     }
 }

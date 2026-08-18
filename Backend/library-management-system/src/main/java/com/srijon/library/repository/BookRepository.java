@@ -9,7 +9,12 @@ import org.springframework.data.domain.Pageable;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    //sorting by title
-    public Page<Book> findByTitleContainingIgnoreCase(
-            String title ,Pageable pageable);
+    //sorting by title,author, isbn
+    Page<Book> findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCaseOrIsbnContainingIgnoreCase(
+            String title,
+            String author,
+            String isbn,
+            Pageable pageable
+    );
+
 }

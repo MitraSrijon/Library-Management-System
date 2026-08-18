@@ -24,6 +24,6 @@ public interface BookService {
     void deleteBook(Long id);
 
     //Searching the book by title
-    Page<BookResponseDto> searchBook(String title, Pageable pageable);
+    Page<BookResponseDto> searchBook(String query, Pageable pageable);
 
 }

@@ -109,11 +109,12 @@ public class BookServiceImpl implements BookService{
 
     }
 
-    //Logic of searching books by title
+    //Logic of searching books by title,author,isbn
     @Override
-    public Page<BookResponseDto> searchBook(String title, Pageable pageable) {
+    public Page<BookResponseDto> searchBook(String query, Pageable pageable) {
 
-        Page<Book> books = bookRepository.findByTitleContainingIgnoreCase(title,pageable);
+        Page<Book> books = bookRepository.findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCaseOrIsbnContainingIgnoreCase(
+                query,query,query,pageable);
         return books.map(mapper :: toResponseDto);
     }
 }
