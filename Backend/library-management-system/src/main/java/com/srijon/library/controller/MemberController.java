@@ -1,10 +1,14 @@
 package com.srijon.library.controller;
 
+import com.srijon.library.dto.BookResponseDto;
 import com.srijon.library.dto.MemberRequestDto;
 import com.srijon.library.dto.MemberResponseDto;
 import com.srijon.library.entity.Member;
 import com.srijon.library.service.MemberService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,9 +40,11 @@ public class MemberController {
 
     //Logic of getting all the members in our database
     @GetMapping
-    public List<MemberResponseDto> getAllMembers(){
+    public Page<MemberResponseDto> getAllMembers(
+            @PageableDefault(size = 10) Pageable pageable
+            ){
 
-        return memberService.getAllMembers();
+        return memberService.getAllMembers(pageable);
     }
 
     //Logic of getting a particular member using its id
@@ -69,5 +75,13 @@ public class MemberController {
         memberService.deleteMember(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    //Logic o searching a member by its name,email,phone
+    @GetMapping("/search")
+    public Page<MemberResponseDto> searchMember(
+            @RequestParam  String query , Pageable pageable){
+
+        return memberService.searchMember(query,pageable);
     }
 }

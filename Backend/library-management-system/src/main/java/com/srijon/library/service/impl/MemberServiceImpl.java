@@ -2,15 +2,14 @@ package com.srijon.library.service.impl;
 
 import com.srijon.library.dto.MemberRequestDto;
 import com.srijon.library.dto.MemberResponseDto;
-import com.srijon.library.entity.Book;
 import com.srijon.library.entity.Member;
 import com.srijon.library.exception.MemberNotFoundException;
 import com.srijon.library.mapper.MemberMapper;
 import com.srijon.library.repository.MemberRepository;
 import com.srijon.library.service.MemberService;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -35,13 +34,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<MemberResponseDto> getAllMembers() {
-        List<Member> members = memberRepository.findAll();
+    public Page<MemberResponseDto> getAllMembers(Pageable pageable) {
 
-        return members
-                .stream()
-                .map(memberMapper :: toResponseDto)
-                .toList();
+        Page<Member> members = memberRepository.findAll(pageable);
+        return members.map(memberMapper::toResponseDto);
+
     }
 
     @Override
@@ -84,6 +81,16 @@ public class MemberServiceImpl implements MemberService {
                 );
 
         memberRepository.delete(member);
+    }
+
+    @Override
+    public Page<MemberResponseDto> searchMember(String query, Pageable pageable) {
+
+        Page<Member> members = memberRepository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneContainingIgnoreCase(
+                query,query,query,pageable
+        );
+
+        return members.map(memberMapper::toResponseDto);
     }
 
 }
