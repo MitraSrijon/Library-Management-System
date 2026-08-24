@@ -1,9 +1,7 @@
 package com.srijon.library.controller;
 
-import com.srijon.library.dto.BookResponseDto;
-import com.srijon.library.dto.MemberRequestDto;
-import com.srijon.library.dto.MemberResponseDto;
-import com.srijon.library.entity.Member;
+import com.srijon.library.dto.Member.MemberRequestDto;
+import com.srijon.library.dto.Member.MemberResponseDto;
 import com.srijon.library.service.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -12,8 +10,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/members")

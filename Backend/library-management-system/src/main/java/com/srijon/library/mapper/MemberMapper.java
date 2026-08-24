@@ -1,8 +1,7 @@
 package com.srijon.library.mapper;
 
-import com.srijon.library.dto.MemberRequestDto;
-import com.srijon.library.dto.MemberResponseDto;
-import com.srijon.library.entity.Book;
+import com.srijon.library.dto.Member.MemberRequestDto;
+import com.srijon.library.dto.Member.MemberResponseDto;
 import com.srijon.library.entity.Member;
 import org.springframework.stereotype.Component;
 

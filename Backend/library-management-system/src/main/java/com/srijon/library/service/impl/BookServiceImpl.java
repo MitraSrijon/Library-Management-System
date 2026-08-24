@@ -1,7 +1,7 @@
 package com.srijon.library.service.impl;
 
-import com.srijon.library.dto.BookRequestDto;
-import com.srijon.library.dto.BookResponseDto;
+import com.srijon.library.dto.Book.BookRequestDto;
+import com.srijon.library.dto.Book.BookResponseDto;
 import com.srijon.library.entity.Book;
 import com.srijon.library.exception.BookDeletionException;
 import com.srijon.library.exception.BookNotFoundException;
@@ -11,8 +11,6 @@ import com.srijon.library.service.BookService;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService{

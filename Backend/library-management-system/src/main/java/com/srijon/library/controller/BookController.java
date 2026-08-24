@@ -1,8 +1,7 @@
 package com.srijon.library.controller;
 
-import com.srijon.library.dto.BookRequestDto;
-import com.srijon.library.dto.BookResponseDto;
-import com.srijon.library.entity.Book;
+import com.srijon.library.dto.Book.BookRequestDto;
+import com.srijon.library.dto.Book.BookResponseDto;
 import com.srijon.library.service.BookService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -10,10 +9,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.service.annotation.DeleteExchange;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
 
 @Slf4j
 @RestController

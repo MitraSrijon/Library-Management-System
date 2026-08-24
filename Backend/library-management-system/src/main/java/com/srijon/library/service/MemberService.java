@@ -1,11 +1,9 @@
 package com.srijon.library.service;
 
-import com.srijon.library.dto.MemberRequestDto;
-import com.srijon.library.dto.MemberResponseDto;
+import com.srijon.library.dto.Member.MemberRequestDto;
+import com.srijon.library.dto.Member.MemberResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import java.util.List;
 
 public interface MemberService {
 

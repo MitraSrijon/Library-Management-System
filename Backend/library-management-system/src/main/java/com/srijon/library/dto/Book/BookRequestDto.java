@@ -1,4 +1,4 @@
-package com.srijon.library.dto;
+package com.srijon.library.dto.Book;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

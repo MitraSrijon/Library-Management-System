@@ -1,10 +1,9 @@
 package com.srijon.library.service;
 
-import com.srijon.library.dto.BookRequestDto;
-import com.srijon.library.dto.BookResponseDto;
+import com.srijon.library.dto.Book.BookRequestDto;
+import com.srijon.library.dto.Book.BookResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
 
 public interface BookService {
 

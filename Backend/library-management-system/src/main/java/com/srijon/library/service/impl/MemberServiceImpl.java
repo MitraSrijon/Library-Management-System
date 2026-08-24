@@ -1,7 +1,7 @@
 package com.srijon.library.service.impl;
 
-import com.srijon.library.dto.MemberRequestDto;
-import com.srijon.library.dto.MemberResponseDto;
+import com.srijon.library.dto.Member.MemberRequestDto;
+import com.srijon.library.dto.Member.MemberResponseDto;
 import com.srijon.library.entity.Member;
 import com.srijon.library.exception.MemberNotFoundException;
 import com.srijon.library.mapper.MemberMapper;

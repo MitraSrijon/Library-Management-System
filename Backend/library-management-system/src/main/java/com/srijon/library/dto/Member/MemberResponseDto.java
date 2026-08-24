@@ -1,4 +1,4 @@
-package com.srijon.library.dto;
+package com.srijon.library.dto.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

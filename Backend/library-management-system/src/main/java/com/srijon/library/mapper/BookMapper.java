@@ -1,11 +1,8 @@
 package com.srijon.library.mapper;
 
-import com.srijon.library.dto.BookRequestDto;
-import com.srijon.library.dto.BookResponseDto;
+import com.srijon.library.dto.Book.BookRequestDto;
+import com.srijon.library.dto.Book.BookResponseDto;
 import com.srijon.library.entity.Book;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 @Component

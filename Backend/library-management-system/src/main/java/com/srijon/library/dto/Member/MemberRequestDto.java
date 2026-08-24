@@ -1,4 +1,4 @@
-package com.srijon.library.dto;
+package com.srijon.library.dto.Member;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
