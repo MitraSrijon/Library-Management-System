@@ -19,6 +19,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    //If any field is missing
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex){
 
@@ -40,6 +41,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
+    //If we could not find the book
     @ExceptionHandler(BookNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleBookNotFoundException(BookNotFoundException ex){
 
@@ -55,6 +57,7 @@ public class GlobalExceptionHandler {
                 .body(errorResponse);
     }
 
+    //If we could not find book to delete
     @ExceptionHandler(BookDeletionException.class)
     public ResponseEntity<ErrorResponse> handleBookDeletionException(BookDeletionException ex){
 
@@ -70,6 +73,7 @@ public class GlobalExceptionHandler {
                 .body(errorResponse);
     }
 
+    //If more than 1 email exist
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> handleDataIntegrityViolationException(DataIntegrityViolationException ex){
 
@@ -77,6 +81,22 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now(),
                 HttpStatus.CONFLICT.value(),
                 "Email already exists",
+                null
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(errorResponse);
+    }
+
+    //If the book requested is not available
+    @ExceptionHandler(BookNotAvailableException.class)
+    public ResponseEntity<ErrorResponse> handleBookNotAvailableException(BookNotAvailableException ex){
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
                 null
         );
 
