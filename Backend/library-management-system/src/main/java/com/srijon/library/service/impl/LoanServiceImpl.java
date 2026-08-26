@@ -6,15 +6,17 @@ import com.srijon.library.entity.Book;
 import com.srijon.library.entity.Loan;
 import com.srijon.library.entity.Member;
 import com.srijon.library.entity.enums.LoanStatus;
-import com.srijon.library.exception.BookNotAvailableException;
-import com.srijon.library.exception.BookNotFoundException;
-import com.srijon.library.exception.MemberNotFoundException;
+import com.srijon.library.exception.*;
 import com.srijon.library.mapper.LoanMapper;
 import com.srijon.library.repository.BookRepository;
 import com.srijon.library.repository.LoanRepository;
 import com.srijon.library.repository.MemberRepository;
 import com.srijon.library.service.LoanService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -42,6 +44,7 @@ public class LoanServiceImpl implements LoanService {
 
 
     @Override
+    @Transactional
     public LoanResponseDto borrowBook(LoanRequestDto loanRequestDto) {
 
         //Fetching Member
@@ -79,5 +82,41 @@ public class LoanServiceImpl implements LoanService {
         Loan savedLoan = loanRepository.save(loan);
 
         return loanMapper.toResponseDto(savedLoan);
+    }
+
+    //Logic of returning a book
+    @Override
+    @Transactional
+    public LoanResponseDto returnBook(Long loanId) {
+
+        Loan loan = loanRepository.findById(loanId)
+                .orElseThrow(
+                        () -> new LoanNotFoundException("Loan not found with id : " + loanId)
+                );
+
+        //Checking return status
+        if(loan.getStatus() == LoanStatus.RETURNED){
+            throw new LoanAlreadyReturnedException("Book has already been returned");
+        }
+
+        loan.setReturnDate(LocalDate.now());
+        loan.setStatus(LoanStatus.RETURNED);
+
+        Book book = loan.getBook();
+        book.setAvailableCopies(book.getAvailableCopies() + 1);
+
+        bookRepository.save(book);
+
+        Loan updateLoan = loanRepository.save(loan);
+
+        return loanMapper.toResponseDto(updateLoan);
+    }
+
+    @Override
+    public Page<LoanResponseDto> getAllLoans(Pageable pageable) {
+
+        Page<Loan> loans = loanRepository.findAll(pageable);
+
+        return loans.map(loanMapper :: toResponseDto);
     }
 }
