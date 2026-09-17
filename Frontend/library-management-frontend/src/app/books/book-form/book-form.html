@@ -1,0 +1,30 @@
+<h2>Add Book</h2>
+
+<form (ngSubmit)="addBook()">
+  <div>
+    <label>Title</label>
+    <input type="text" [(ngModel)]="title" name="title" />
+  </div>
+
+  <div>
+    <label>Author</label>
+    <input type="text" [(ngModel)]="author" name="author" />
+  </div>
+
+  <div>
+    <label>ISBN</label>
+    <input type="text" [(ngModel)]="isbn" name="isbn" />
+  </div>
+
+  <div>
+    <label>Published Year</label>
+    <input type="number" [(ngModel)]="publishedYear" name="publishedYear" />
+  </div>
+
+  <div>
+    <label>Total Copies</label>
+    <input type="number" [(ngModel)]="totalCopies" name="totalCopies" />
+  </div>
+
+  <button type="submit">Add Book</button>
+</form>

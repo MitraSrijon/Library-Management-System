@@ -1,1 +1,45 @@
-<p>book-list works!</p>
+<h2>Books</h2>
+
+<div class="search-box">
+  <input type="text" placeholder="Search by title, author or ISBN" #searchInput />
+
+  <button (click)="searchBooks(searchInput.value)">Search</button>
+
+  <button (click)="searchInput.value = ''; loadBooks()">Clear</button>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>ISBN</th>
+      <th>Published Year</th>
+      <th>Total Copies</th>
+      <th>Available Copies</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (book of books; track book.id) {
+      <tr>
+        <td>{{ book.id }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.isbn }}</td>
+        <td>{{ book.publishedYear }}</td>
+        <td>{{ book.totalCopies }}</td>
+        <td>{{ book.availableCopies }}</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<div class="pagination">
+  <button (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
+
+  <span> Page {{ currentPage + 1 }} of {{ totalPages }} </span>
+
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages - 1">Next</button>
+</div>
