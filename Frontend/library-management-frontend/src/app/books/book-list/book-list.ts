@@ -18,6 +18,8 @@ export class BookList implements OnInit {
 
   private bookService = inject(BookService);
 
+  selectedBookId: number | null = null;
+
   ngOnInit(): void {
     this.loadBooks();
   }
@@ -62,5 +64,9 @@ export class BookList implements OnInit {
         console.error('Error searching books:', error);
       },
     });
+  }
+
+  editBook(id: number): void {
+    this.selectedBookId = id;
   }
 }

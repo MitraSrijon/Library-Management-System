@@ -3,3 +3,6 @@
 <app-book-list #bookList></app-book-list>
 
 <app-book-form (bookAdded)="bookList.loadBooks()"></app-book-form>
+
+<app-book-edit [id]="bookList.selectedBookId ?? 0" (bookUpdated)="bookList.loadBooks()">
+</app-book-edit>

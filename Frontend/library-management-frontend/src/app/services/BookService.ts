@@ -15,8 +15,16 @@ export class BookService {
     return this.http.get<any>(`${this.apiUrl}?page=${page}&size=${size}`);
   }
 
+  getBookById(id: number): Observable<Book> {
+    return this.http.get<Book>(`${this.apiUrl}/${id}`);
+  }
+
   createBook(book: Book): Observable<Book> {
     return this.http.post<Book>(this.apiUrl, book);
+  }
+
+  updateBook(id: number, book: any): Observable<Book> {
+    return this.http.put<Book>(`${this.apiUrl}/${id}`, book);
   }
 
   searchBooks(keyword: string): Observable<any> {
