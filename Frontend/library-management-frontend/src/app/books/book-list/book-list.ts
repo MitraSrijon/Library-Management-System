@@ -69,4 +69,22 @@ export class BookList implements OnInit {
   editBook(id: number): void {
     this.selectedBookId = id;
   }
+
+  deleteBook(id: number): void {
+    const confirmed = confirm('Are you sure you want to delete this book?');
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.bookService.deleteBook(id).subscribe({
+      next: () => {
+        console.log('Book deleted successfully');
+        this.loadBooks();
+      },
+      error: (error) => {
+        console.error('Error deleting book:', error);
+      },
+    });
+  }
 }

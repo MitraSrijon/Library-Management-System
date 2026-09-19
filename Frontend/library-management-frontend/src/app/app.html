@@ -6,3 +6,10 @@
 
 <app-book-edit [id]="bookList.selectedBookId ?? 0" (bookUpdated)="bookList.loadBooks()">
 </app-book-edit>
+
+<app-member-list #memberList></app-member-list>
+
+<app-member-form (memberAdded)="memberList.loadMembers()"> </app-member-form>
+
+<app-member-edit [id]="memberList.selectedMemberId ?? 0" (memberUpdated)="memberList.loadMembers()">
+</app-member-edit>

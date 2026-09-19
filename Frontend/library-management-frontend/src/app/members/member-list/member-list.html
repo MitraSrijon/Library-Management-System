@@ -1,0 +1,51 @@
+<h2>Members</h2>
+
+<div>
+  <input
+    type="text"
+    #searchInput
+    placeholder="Search members..."
+    (input)="searchMembers(searchInput.value)"
+  />
+
+  <button type="button" (click)="searchInput.value = ''; loadMembers()">Clear</button>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Membership Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (member of members; track member.id) {
+      <tr>
+        <td>{{ member.id }}</td>
+        <td>{{ member.name }}</td>
+        <td>{{ member.email }}</td>
+        <td>{{ member.phone }}</td>
+        <td>{{ member.membershipDate }}</td>
+        <td>
+          <button type="button" (click)="editMember(member.id)">Edit</button>
+          <button type="button" (click)="deleteMember(member.id)">Delete</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<div>
+  <button type="button" (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
+
+  <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+
+  <button type="button" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">
+    Next
+  </button>
+</div>

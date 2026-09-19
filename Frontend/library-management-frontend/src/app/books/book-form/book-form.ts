@@ -1,9 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BookService } from '../../services/BookService';
-import { inject } from '@angular/core';
 import { Book } from '../../models/book';
-import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-book-form',
@@ -16,8 +14,8 @@ export class BookForm {
   title = '';
   author = '';
   isbn = '';
-  publishedYear = 0;
-  totalCopies = 0;
+  publishedYear: number | null = null;
+  totalCopies: number | null = null;
 
   private bookService = inject(BookService);
 
@@ -29,14 +27,21 @@ export class BookForm {
       title: this.title,
       author: this.author,
       isbn: this.isbn,
-      publishedYear: this.publishedYear,
-      totalCopies: this.totalCopies,
+      publishedYear: this.publishedYear!,
+      totalCopies: this.totalCopies!,
       availableCopies: 0,
     };
 
     this.bookService.createBook(book).subscribe({
       next: (response) => {
         console.log('Book added successfully:', response);
+
+        this.title = '';
+        this.author = '';
+        this.isbn = '';
+        this.publishedYear = null;
+        this.totalCopies = null;
+
         this.bookAdded.emit();
       },
       error: (error) => {

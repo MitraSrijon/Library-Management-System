@@ -1,9 +1,12 @@
 <h2>Books</h2>
 
 <div class="search-box">
-  <input type="text" placeholder="Search by title, author or ISBN" #searchInput />
-
-  <button (click)="searchBooks(searchInput.value)">Search</button>
+  <input
+    type="text"
+    #searchInput
+    placeholder="Search books..."
+    (input)="searchBooks(searchInput.value)"
+  />
 
   <button (click)="searchInput.value = ''; loadBooks()">Clear</button>
 </div>
@@ -35,6 +38,8 @@
 
         <td>
           <button type="button" (click)="editBook(book.id)">Edit</button>
+
+          <button type="button" (click)="deleteBook(book.id)">Delete</button>
         </td>
       </tr>
     }

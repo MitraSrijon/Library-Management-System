@@ -30,4 +30,8 @@ export class BookService {
   searchBooks(keyword: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/search?query=${keyword}`);
   }
+
+  deleteBook(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }

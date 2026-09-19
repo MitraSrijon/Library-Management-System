@@ -42,7 +42,6 @@ export class BookEdit implements OnInit, OnChanges {
 
   updateBook(): void {
     const book = {
-      id: this.id,
       title: this.title,
       author: this.author,
       isbn: this.isbn,
@@ -53,6 +52,13 @@ export class BookEdit implements OnInit, OnChanges {
     this.bookService.updateBook(this.id, book).subscribe({
       next: (response) => {
         console.log('Book updated successfully:', response);
+
+        this.title = '';
+        this.author = '';
+        this.isbn = '';
+        this.publishedYear = 0;
+        this.totalCopies = 0;
+
         this.bookUpdated.emit();
       },
       error: (error) => {

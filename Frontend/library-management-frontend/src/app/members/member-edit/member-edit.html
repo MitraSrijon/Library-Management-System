@@ -1,0 +1,51 @@
+<h2>Edit Member</h2>
+
+<form #memberForm="ngForm" (ngSubmit)="updateMember()">
+  <div>
+    <label>Name</label>
+
+    <input type="text" [(ngModel)]="name" name="name" required #nameInput="ngModel" />
+
+    @if (nameInput.invalid && nameInput.touched) {
+      <small>Name is required.</small>
+    }
+  </div>
+
+  <div>
+    <label>Email</label>
+
+    <input type="email" [(ngModel)]="email" name="email" required email #emailInput="ngModel" />
+
+    @if (emailInput.invalid && emailInput.touched) {
+      <small>Enter a valid email.</small>
+    }
+  </div>
+
+  <div>
+    <label>Phone</label>
+
+    <input type="text" [(ngModel)]="phone" name="phone" required #phoneInput="ngModel" />
+
+    @if (phoneInput.invalid && phoneInput.touched) {
+      <small>Phone is required.</small>
+    }
+  </div>
+
+  <div>
+    <label>Membership Date</label>
+
+    <input
+      type="date"
+      [(ngModel)]="membershipDate"
+      name="membershipDate"
+      required
+      #dateInput="ngModel"
+    />
+
+    @if (dateInput.invalid && dateInput.touched) {
+      <small>Membership date is required.</small>
+    }
+  </div>
+
+  <button type="submit" [disabled]="memberForm.invalid">Update Member</button>
+</form>
