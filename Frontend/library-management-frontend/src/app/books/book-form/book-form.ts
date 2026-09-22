@@ -32,6 +32,8 @@ export class BookForm {
       availableCopies: 0,
     };
 
+    console.log('Book being sent:', book);
+
     this.bookService.createBook(book).subscribe({
       next: (response) => {
         console.log('Book added successfully:', response);
@@ -44,8 +46,11 @@ export class BookForm {
 
         this.bookAdded.emit();
       },
+
       error: (error) => {
-        console.error('Error adding book:', error);
+        console.error('Status:', error.status);
+        console.error('Backend response:', error.error);
+        console.error('Backend message:', error.error?.message);
       },
     });
   }

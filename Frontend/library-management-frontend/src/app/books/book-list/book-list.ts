@@ -1,11 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { BookService } from '../../services/BookService';
 import { Book } from '../../models/book';
+import { BookForm } from '../book-form/book-form';
 
 @Component({
   selector: 'app-book-list',
   standalone: true,
-  imports: [],
+  imports: [BookForm],
   templateUrl: './book-list.html',
   styleUrl: './book-list.css',
 })
@@ -19,6 +20,8 @@ export class BookList implements OnInit {
   private bookService = inject(BookService);
 
   selectedBookId: number | null = null;
+
+  showAddForm = false;
 
   ngOnInit(): void {
     this.loadBooks();

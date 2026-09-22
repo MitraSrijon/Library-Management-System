@@ -1,15 +1,11 @@
 <h1>Library Management System</h1>
 
-<app-book-list #bookList></app-book-list>
+<nav>
+  <a routerLink="/">Dashboard</a>
+  <a routerLink="/books">Books</a>
+  <a routerLink="/members">Members</a>
+  <a routerLink="/loans">Loans</a>
+  <a routerLink="/borrow">Borrow Book</a>
+</nav>
 
-<app-book-form (bookAdded)="bookList.loadBooks()"></app-book-form>
-
-<app-book-edit [id]="bookList.selectedBookId ?? 0" (bookUpdated)="bookList.loadBooks()">
-</app-book-edit>
-
-<app-member-list #memberList></app-member-list>
-
-<app-member-form (memberAdded)="memberList.loadMembers()"> </app-member-form>
-
-<app-member-edit [id]="memberList.selectedMemberId ?? 0" (memberUpdated)="memberList.loadMembers()">
-</app-member-edit>
+<router-outlet></router-outlet>

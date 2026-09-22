@@ -1,4 +1,22 @@
-<h2>Books</h2>
+<div class="page-header">
+  <h2>Book List</h2>
+
+  <button type="button" (click)="showAddForm = true">+ Add Book</button>
+</div>
+
+@if (showAddForm) {
+  <div class="modal-backdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Add New Book</h2>
+
+        <button type="button" (click)="showAddForm = false">×</button>
+      </div>
+
+      <app-book-form (bookAdded)="showAddForm = false; loadBooks()"> </app-book-form>
+    </div>
+  </div>
+}
 
 <div class="search-box">
   <input

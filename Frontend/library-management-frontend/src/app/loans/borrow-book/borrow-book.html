@@ -1,0 +1,33 @@
+<h2>Borrow Book</h2>
+
+<form #borrowForm="ngForm" (ngSubmit)="borrowBook()">
+  <div>
+    <label>Member ID</label>
+    <select [(ngModel)]="memberId" name="memberId" required #memberInput="ngModel">
+      <option [ngValue]="null">Select Member</option>
+
+      @for (member of members; track member.id) {
+        <option [ngValue]="member.id">{{ member.name }} - {{ member.email }}</option>
+      }
+    </select>
+
+    @if (memberInput.invalid && memberInput.touched) {
+      <small>Member ID is required.</small>
+    }
+  </div>
+
+  <div>
+    <label>Book ID</label>
+    <select [(ngModel)]="bookId" name="bookId" required #bookInput="ngModel">
+      <option [ngValue]="null">Select Book</option>
+
+      @for (book of books; track book.id) {
+        <option [ngValue]="book.id" [disabled]="book.availableCopies === 0">
+          {{ book.title }} - {{ book.author }} ({{ book.availableCopies }} available)
+        </option>
+      }
+    </select>
+  </div>
+
+  <button type="submit" [disabled]="borrowForm.invalid">Borrow Book</button>
+</form>

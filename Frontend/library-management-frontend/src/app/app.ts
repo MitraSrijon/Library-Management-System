@@ -6,11 +6,25 @@ import { BookEdit } from './books/book-edit/book-edit';
 import { MemberList } from './members/member-list/member-list';
 import { MemberForm } from './members/member-form/member-form';
 import { MemberEdit } from './members/member-edit/member-edit';
+import { LoanList } from './loans/loan-list/loan-list';
+import { BorrowBook } from './loans/borrow-book/borrow-book';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, BookList, BookForm, BookEdit, MemberList, MemberForm, MemberEdit],
+  imports: [
+    RouterOutlet,
+    BookList,
+    BookForm,
+    BookEdit,
+    MemberList,
+    MemberForm,
+    MemberEdit,
+    LoanList,
+    BorrowBook,
+    RouterLink,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
