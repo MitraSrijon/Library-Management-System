@@ -1,11 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { MemberService } from '../../services/MemberService';
 import { Member } from '../../models/member';
+import { MemberForm } from '../member-form/member-form';
+import { MemberEdit } from '../member-edit/member-edit';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-member-list',
   standalone: true,
-  imports: [],
+  imports: [MemberForm, MemberEdit, DatePipe],
   templateUrl: './member-list.html',
   styleUrl: './member-list.css',
 })
@@ -17,6 +20,7 @@ export class MemberList implements OnInit {
   totalPages = 0;
 
   selectedMemberId: number | null = null;
+  showAddForm = false;
 
   private memberService = inject(MemberService);
 

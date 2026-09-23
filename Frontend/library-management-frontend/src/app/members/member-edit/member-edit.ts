@@ -4,6 +4,7 @@ import { MemberService } from '../../services/MemberService';
 
 @Component({
   selector: 'app-member-edit',
+  standalone: true,
   imports: [FormsModule],
   templateUrl: './member-edit.html',
   styleUrl: './member-edit.css',
@@ -19,6 +20,7 @@ export class MemberEdit implements OnChanges {
   private memberService = inject(MemberService);
 
   @Output() memberUpdated = new EventEmitter<void>();
+  @Output() cancelled = new EventEmitter<void>();
 
   ngOnChanges(): void {
     if (this.id > 0) {
@@ -63,5 +65,9 @@ export class MemberEdit implements OnChanges {
         console.error('Error updating member:', error);
       },
     });
+  }
+
+  cancel(): void {
+    this.cancelled.emit();
   }
 }

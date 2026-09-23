@@ -1,35 +1,167 @@
-h2 {
-  margin-bottom: 20px;
+:host {
+  display: block;
 }
 
-div {
-  margin-bottom: 15px;
+.borrow-page {
+  min-height: calc(100vh - 120px);
+  background: #f4f7fb;
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+/* PAGE HEADER */
+
+.page-header {
+  background: white;
+  padding: 20px 24px;
+  border-radius: 10px;
+}
+
+.page-title h2 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.page-title p {
+  margin: 5px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* BORROW CARD */
+
+.borrow-card {
+  margin-top: 20px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+/* CARD HEADER */
+
+.card-header {
+  padding: 16px 24px;
+  background: #1f2937;
+  border-bottom: 1px solid #374151;
+}
+
+.card-header h3 {
+  margin: 0;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.card-header p {
+  margin: 5px 0 0;
+  color: #d1d5db;
+  font-size: 13px;
+}
+
+/* FORM AREA */
+
+.form-wrapper {
+  padding: 25px 24px;
+}
+
+form {
+  max-width: 650px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 label {
-  display: block;
-  margin-bottom: 5px;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 600;
 }
 
-input {
-  padding: 8px;
-  width: 250px;
-}
-
-button {
-  padding: 8px 15px;
+select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: white;
+  color: #374151;
+  font-size: 14px;
   cursor: pointer;
 }
 
-button:disabled {
+select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+select:disabled {
   cursor: not-allowed;
 }
 
 small {
-  display: block;
+  color: #d32f2f;
+  font-size: 12px;
 }
 
-select {
-  padding: 8px;
-  width: 270px;
+/* ACTION */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 5px;
+  padding-top: 5px;
+}
+
+.borrow-btn {
+  min-width: 120px;
+  height: 36px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.borrow-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.borrow-btn:disabled {
+  background: #d1d5db;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .borrow-page {
+    padding: 15px;
+  }
+
+  .borrow-card {
+    margin-top: 15px;
+  }
+
+  .card-header,
+  .form-wrapper {
+    padding: 18px;
+  }
+
+  form {
+    max-width: 100%;
+  }
 }

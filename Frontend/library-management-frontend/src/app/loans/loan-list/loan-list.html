@@ -1,54 +1,73 @@
-<h2>Loan History</h2>
+<div class="loans-page">
+  <div class="page-header">
+    <div class="page-title">
+      <h2>Loan History</h2>
+      <p>Track borrowed and returned books</p>
+    </div>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Member</th>
-      <th>Book</th>
-      <th>Borrow Date</th>
-      <th>Due Date</th>
-      <th>Return Date</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
-  </thead>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Member</th>
+          <th>Book</th>
+          <th>Borrow Date</th>
+          <th>Due Date</th>
+          <th>Return Date</th>
+          <th>Status</th>
+          <th class="actions-header">Action</th>
+        </tr>
+      </thead>
 
-  <tbody>
-    @for (loan of loans; track loan.id) {
-      <tr>
-        <td>{{ loan.id }}</td>
-        <td>{{ getMemberName(loan.memberId) }}</td>
-        <td>{{ getBookTitle(loan.bookId) }}</td>
-        <td>{{ loan.borrowDate }}</td>
-        <td>{{ loan.dueDate }}</td>
-        <td>{{ loan.returnDate ?? '-' }}</td>
-        <td>
-          <span
-            [class.borrowed]="loan.status === 'BORROWED'"
-            [class.returned]="loan.status === 'RETURNED'"
-          >
-            {{ loan.status }}
-          </span>
-        </td>
-        <td>
-          @if (loan.status === 'BORROWED') {
-            <button type="button" (click)="returnBook(loan.id)">Return</button>
-          } @else {
-            -
-          }
-        </td>
-      </tr>
-    }
-  </tbody>
-</table>
+      <tbody>
+        @for (loan of loans; track loan.id) {
+          <tr>
+            <td>{{ loan.id }}</td>
 
-<div>
-  <button type="button" (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
+            <td>{{ getMemberName(loan.memberId) }}</td>
 
-  <span> Page {{ currentPage + 1 }} of {{ totalPages }} </span>
+            <td>{{ getBookTitle(loan.bookId) }}</td>
 
-  <button type="button" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">
-    Next
-  </button>
+            <td>{{ loan.borrowDate | date: 'dd MMM yyyy' }}</td>
+
+            <td>{{ loan.dueDate | date: 'dd MMM yyyy' }}</td>
+
+            <td>{{ loan.returnDate ? (loan.returnDate | date: 'dd MMM yyyy') : '-' }}</td>
+
+            <td>
+              <span
+                class="status"
+                [class.borrowed]="loan.status === 'BORROWED'"
+                [class.returned]="loan.status === 'RETURNED'"
+              >
+                {{ loan.status }}
+              </span>
+            </td>
+
+            <td class="actions">
+              @if (loan.status === 'BORROWED') {
+                <button type="button" class="return-btn" (click)="returnBook(loan.id)">
+                  Return
+                </button>
+              } @else {
+                <span class="no-action">-</span>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <button type="button" (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
+
+    <span> Page {{ currentPage + 1 }} of {{ totalPages }} </span>
+
+    <button type="button" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">
+      Next
+    </button>
+  </div>
 </div>

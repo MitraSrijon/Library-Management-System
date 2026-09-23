@@ -5,10 +5,12 @@ import { BookService } from '../../services/BookService';
 import { MemberService } from '../../services/MemberService';
 import { Book } from '../../models/book';
 import { Member } from '../../models/member';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-loan-list',
-  imports: [],
+  standalone: true,
+  imports: [DatePipe],
   templateUrl: './loan-list.html',
   styleUrl: './loan-list.css',
 })

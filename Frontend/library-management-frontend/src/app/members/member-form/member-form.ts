@@ -5,6 +5,7 @@ import { Member } from '../../models/member';
 
 @Component({
   selector: 'app-member-form',
+  standalone: true,
   imports: [FormsModule],
   templateUrl: './member-form.html',
   styleUrl: './member-form.css',
@@ -18,6 +19,7 @@ export class MemberForm {
   private memberService = inject(MemberService);
 
   @Output() memberAdded = new EventEmitter<void>();
+  @Output() cancelled = new EventEmitter<void>();
 
   addMember(): void {
     const member: Member = {
@@ -43,5 +45,9 @@ export class MemberForm {
         console.error('Error adding member:', error);
       },
     });
+  }
+
+  cancel(): void {
+    this.cancelled.emit();
   }
 }

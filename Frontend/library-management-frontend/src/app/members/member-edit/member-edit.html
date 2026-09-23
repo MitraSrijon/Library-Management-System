@@ -1,5 +1,3 @@
-<h2>Edit Member</h2>
-
 <form #memberForm="ngForm" (ngSubmit)="updateMember()">
   <div>
     <label>Name</label>
@@ -47,5 +45,9 @@
     }
   </div>
 
-  <button type="submit" [disabled]="memberForm.invalid">Update Member</button>
+  <div class="form-actions">
+    <button type="button" class="cancel-btn" (click)="cancel()">Cancel</button>
+
+    <button type="submit" class="save-btn" [disabled]="memberForm.invalid">Save</button>
+  </div>
 </form>

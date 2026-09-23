@@ -1,51 +1,107 @@
-<h2>Members</h2>
+<div class="members-page">
+  <div class="page-header">
+    <div class="page-title">
+      <h2>Member List</h2>
+      <p>Manage your library members</p>
+    </div>
 
-<div>
-  <input
-    type="text"
-    #searchInput
-    placeholder="Search members..."
-    (input)="searchMembers(searchInput.value)"
-  />
+    <button type="button" class="add-member-btn" (click)="showAddForm = true">+ Add Member</button>
+  </div>
 
-  <button type="button" (click)="searchInput.value = ''; loadMembers()">Clear</button>
-</div>
+  @if (showAddForm) {
+    <div class="modal-backdrop">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Add New Member</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Membership Date</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
+          <button type="button" class="close-btn" (click)="showAddForm = false">×</button>
+        </div>
 
-  <tbody>
-    @for (member of members; track member.id) {
-      <tr>
-        <td>{{ member.id }}</td>
-        <td>{{ member.name }}</td>
-        <td>{{ member.email }}</td>
-        <td>{{ member.phone }}</td>
-        <td>{{ member.membershipDate }}</td>
-        <td>
-          <button type="button" (click)="editMember(member.id)">Edit</button>
-          <button type="button" (click)="deleteMember(member.id)">Delete</button>
-        </td>
-      </tr>
-    }
-  </tbody>
-</table>
+        <app-member-form
+          (memberAdded)="showAddForm = false; loadMembers()"
+          (cancelled)="showAddForm = false"
+        >
+        </app-member-form>
+      </div>
+    </div>
+  }
 
-<div>
-  <button type="button" (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
+  @if (selectedMemberId !== null) {
+    <div class="modal-backdrop">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Edit Member</h2>
 
-  <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+          <button type="button" class="close-btn" (click)="selectedMemberId = null">×</button>
+        </div>
 
-  <button type="button" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">
-    Next
-  </button>
+        <app-member-edit
+          [id]="selectedMemberId"
+          (memberUpdated)="selectedMemberId = null; loadMembers()"
+          (cancelled)="selectedMemberId = null"
+        >
+        </app-member-edit>
+      </div>
+    </div>
+  }
+
+  <div class="search-box">
+    <input
+      type="text"
+      #searchInput
+      placeholder="Search by name, email or phone..."
+      (input)="searchMembers(searchInput.value)"
+    />
+
+    <button type="button" (click)="searchInput.value = ''; loadMembers()">Clear</button>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Membership Date</th>
+          <th class="actions-header">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (member of members; track member.id) {
+          <tr>
+            <td>{{ member.id }}</td>
+
+            <td>{{ member.name }}</td>
+
+            <td>{{ member.email }}</td>
+
+            <td>{{ member.phone }}</td>
+
+            <td>{{ member.membershipDate | date: 'dd MMM yyyy' }}</td>
+
+            <td class="actions">
+              <button type="button" class="edit-btn" (click)="editMember(member.id)">Edit</button>
+
+              <button type="button" class="delete-btn" (click)="deleteMember(member.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <button type="button" (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
+
+    <span> Page {{ currentPage + 1 }} of {{ totalPages }} </span>
+
+    <button type="button" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">
+      Next
+    </button>
+  </div>
 </div>

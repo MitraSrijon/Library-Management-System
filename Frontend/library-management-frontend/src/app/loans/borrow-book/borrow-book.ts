@@ -1,6 +1,5 @@
 import { Component, EventEmitter, inject, Output, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
+import { NgForm, FormsModule } from '@angular/forms';
 import { LoanService } from '../../services/loan-service';
 import { BookService } from '../../services/BookService';
 import { MemberService } from '../../services/MemberService';
@@ -9,6 +8,7 @@ import { Member } from '../../models/member';
 
 @Component({
   selector: 'app-borrow-book',
+  standalone: true,
   imports: [FormsModule],
   templateUrl: './borrow-book.html',
   styleUrl: './borrow-book.css',
