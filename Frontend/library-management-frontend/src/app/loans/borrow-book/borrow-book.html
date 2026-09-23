@@ -12,48 +12,64 @@
       <p>Select a member and an available book to create a loan.</p>
     </div>
 
-    <div class="form-wrapper">
-      <form #borrowForm="ngForm" (ngSubmit)="borrowBook()">
-        <div class="form-group">
-          <label>Member</label>
+    @if (loading) {
+      <div class="state-message">
+        <p>Loading borrow data...</p>
+      </div>
+    }
 
-          <select [(ngModel)]="memberId" name="memberId" required #memberInput="ngModel">
-            <option [ngValue]="null">Select Member</option>
+    @if (!loading && errorMessage) {
+      <div class="state-message error-message">
+        <p>{{ errorMessage }}</p>
 
-            @for (member of members; track member.id) {
-              <option [ngValue]="member.id">{{ member.name }} - {{ member.email }}</option>
+        <button type="button" class="retry-btn" (click)="refreshData()">Try Again</button>
+      </div>
+    }
+
+    @if (!loading && !errorMessage) {
+      <div class="form-wrapper">
+        <form #borrowForm="ngForm" (ngSubmit)="borrowBook()">
+          <div class="form-group">
+            <label>Member</label>
+
+            <select [(ngModel)]="memberId" name="memberId" required #memberInput="ngModel">
+              <option [ngValue]="null">Select Member</option>
+
+              @for (member of members; track member.id) {
+                <option [ngValue]="member.id">{{ member.name }} - {{ member.email }}</option>
+              }
+            </select>
+
+            @if (memberInput.invalid && memberInput.touched) {
+              <small>Member is required.</small>
             }
-          </select>
+          </div>
 
-          @if (memberInput.invalid && memberInput.touched) {
-            <small>Member is required.</small>
-          }
-        </div>
+          <div class="form-group">
+            <label>Book</label>
 
-        <div class="form-group">
-          <label>Book</label>
+            <select [(ngModel)]="bookId" name="bookId" required #bookInput="ngModel">
+              <option [ngValue]="null">Select Book</option>
 
-          <select [(ngModel)]="bookId" name="bookId" required #bookInput="ngModel">
-            <option [ngValue]="null">Select Book</option>
+              @for (book of books; track book.id) {
+                <option [ngValue]="book.id" [disabled]="book.availableCopies === 0">
+                  {{ book.title }} - {{ book.author }} ({{ book.availableCopies }} available)
+                </option>
+              }
+            </select>
 
-            @for (book of books; track book.id) {
-              <option [ngValue]="book.id" [disabled]="book.availableCopies === 0">
-                {{ book.title }} - {{ book.author }} ({{ book.availableCopies }} available)
-              </option>
+            @if (bookInput.invalid && bookInput.touched) {
+              <small>Book is required.</small>
             }
-          </select>
+          </div>
 
-          @if (bookInput.invalid && bookInput.touched) {
-            <small>Book is required.</small>
-          }
-        </div>
-
-        <div class="form-actions">
-          <button type="submit" class="borrow-btn" [disabled]="borrowForm.invalid">
-            Borrow Book
-          </button>
-        </div>
-      </form>
-    </div>
+          <div class="form-actions">
+            <button type="submit" class="borrow-btn" [disabled]="borrowForm.invalid || submitting">
+              {{ submitting ? 'Borrowing...' : 'Borrow Book' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    }
   </div>
 </div>
