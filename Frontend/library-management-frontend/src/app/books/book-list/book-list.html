@@ -1,73 +1,123 @@
-<div class="page-header">
-  <h2>Book List</h2>
+<div class="books-page">
+  <!-- Header -->
 
-  <button type="button" (click)="showAddForm = true">+ Add Book</button>
-</div>
-
-@if (showAddForm) {
-  <div class="modal-backdrop">
-    <div class="modal">
-      <div class="modal-header">
-        <h2>Add New Book</h2>
-
-        <button type="button" (click)="showAddForm = false">×</button>
-      </div>
-
-      <app-book-form (bookAdded)="showAddForm = false; loadBooks()"> </app-book-form>
+  <div class="page-header">
+    <div class="page-title">
+      <h2>Book List</h2>
+      <p>Manage your library books</p>
     </div>
+
+    <button type="button" class="add-book-btn" (click)="showAddForm = true">+ Add Book</button>
   </div>
-}
 
-<div class="search-box">
-  <input
-    type="text"
-    #searchInput
-    placeholder="Search books..."
-    (input)="searchBooks(searchInput.value)"
-  />
+  <!-- Add Book -->
 
-  <button (click)="searchInput.value = ''; loadBooks()">Clear</button>
-</div>
+  @if (showAddForm) {
+    <div class="modal-backdrop">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Add New Book</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Author</th>
-      <th>ISBN</th>
-      <th>Published Year</th>
-      <th>Total Copies</th>
-      <th>Available Copies</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
+          <button type="button" class="close-btn" (click)="showAddForm = false">×</button>
+        </div>
 
-  <tbody>
-    @for (book of books; track book.id) {
-      <tr>
-        <td>{{ book.id }}</td>
-        <td>{{ book.title }}</td>
-        <td>{{ book.author }}</td>
-        <td>{{ book.isbn }}</td>
-        <td>{{ book.publishedYear }}</td>
-        <td>{{ book.totalCopies }}</td>
-        <td>{{ book.availableCopies }}</td>
+        <app-book-form
+          (bookAdded)="showAddForm = false; loadBooks()"
+          (cancelled)="showAddForm = false"
+        >
+        </app-book-form>
+      </div>
+    </div>
+  }
 
-        <td>
-          <button type="button" (click)="editBook(book.id)">Edit</button>
+  <!-- Edit Book -->
 
-          <button type="button" (click)="deleteBook(book.id)">Delete</button>
-        </td>
-      </tr>
-    }
-  </tbody>
-</table>
+  @if (selectedBookId !== null) {
+    <div class="modal-backdrop">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Edit Book</h2>
 
-<div class="pagination">
-  <button (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
+          <button type="button" class="close-btn" (click)="selectedBookId = null">×</button>
+        </div>
 
-  <span> Page {{ currentPage + 1 }} of {{ totalPages }} </span>
+        <app-book-edit
+          [id]="selectedBookId"
+          (bookUpdated)="selectedBookId = null; loadBooks()"
+          (cancelled)="selectedBookId = null"
+        >
+        </app-book-edit>
+      </div>
+    </div>
+  }
 
-  <button (click)="nextPage()" [disabled]="currentPage === totalPages - 1">Next</button>
+  <!-- Search -->
+
+  <div class="search-box">
+    <input
+      type="text"
+      #searchInput
+      placeholder="Search by title, author or ISBN..."
+      (input)="searchBooks(searchInput.value)"
+    />
+
+    <button type="button" (click)="searchInput.value = ''; loadBooks()">Clear</button>
+  </div>
+
+  <!-- Table -->
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>ISBN</th>
+          <th>Published Year</th>
+          <th>Total Copies</th>
+          <th>Available Copies</th>
+          <th class="actions-header">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (book of books; track book.id) {
+          <tr>
+            <td>{{ book.id }}</td>
+
+            <td>{{ book.title }}</td>
+
+            <td>{{ book.author }}</td>
+
+            <td>{{ book.isbn }}</td>
+
+            <td>{{ book.publishedYear }}</td>
+
+            <td>{{ book.totalCopies }}</td>
+
+            <td>{{ book.availableCopies }}</td>
+
+            <td class="actions">
+              <button type="button" class="edit-btn" (click)="editBook(book.id)">Edit</button>
+
+              <button type="button" class="delete-btn" (click)="deleteBook(book.id)">Delete</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+
+  <div class="pagination">
+    <button type="button" (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
+
+    <span> Page {{ currentPage + 1 }} of {{ totalPages }} </span>
+
+    <button type="button" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
+      Next
+    </button>
+  </div>
 </div>

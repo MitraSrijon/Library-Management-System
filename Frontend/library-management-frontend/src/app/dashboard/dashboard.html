@@ -1,1 +1,153 @@
-<p>dashboard works!</p>
+<div class="dashboard-page">
+  <!-- =========================
+       HEADER
+       ========================= -->
+
+  <section class="dashboard-header">
+    <div>
+      <h2>Library Dashboard</h2>
+
+      <p>Welcome to your Library Management System</p>
+    </div>
+  </section>
+
+  <!-- =========================
+       STATISTICS
+       ========================= -->
+
+  <section class="stats-grid">
+    <!-- Total Books -->
+
+    <div class="stat-card">
+      <div class="stat-icon books-icon">📚</div>
+
+      <div class="stat-content">
+        <span>Total Books</span>
+
+        @if (loading) {
+          <strong class="loading-value">...</strong>
+        } @else {
+          <strong>{{ totalBooks }}</strong>
+        }
+      </div>
+    </div>
+
+    <!-- Total Members -->
+
+    <div class="stat-card">
+      <div class="stat-icon members-icon">👥</div>
+
+      <div class="stat-content">
+        <span>Total Members</span>
+
+        @if (loading) {
+          <strong class="loading-value">...</strong>
+        } @else {
+          <strong>{{ totalMembers }}</strong>
+        }
+      </div>
+    </div>
+
+    <!-- Active Loans -->
+
+    <div class="stat-card">
+      <div class="stat-icon loans-icon">📖</div>
+
+      <div class="stat-content">
+        <span>Active Loans</span>
+
+        @if (loading) {
+          <strong class="loading-value">...</strong>
+        } @else {
+          <strong>{{ activeLoans }}</strong>
+        }
+      </div>
+    </div>
+
+    <!-- Available Books -->
+
+    <div class="stat-card">
+      <div class="stat-icon available-icon">✓</div>
+
+      <div class="stat-content">
+        <span>Available Books</span>
+
+        @if (loading) {
+          <strong class="loading-value">...</strong>
+        } @else {
+          <strong>{{ availableBooks }}</strong>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================
+       QUICK ACTIONS
+       ========================= -->
+
+  <section class="dashboard-section">
+    <div class="section-header">
+      <div>
+        <h3>Quick Actions</h3>
+
+        <p>Common library operations</p>
+      </div>
+    </div>
+
+    <div class="actions-grid">
+      <a routerLink="/books" class="dashboard-action">
+        <span class="action-icon">📚</span>
+
+        <div>
+          <strong>Manage Books</strong>
+
+          <span> Add, edit and manage library books </span>
+        </div>
+      </a>
+
+      <a routerLink="/members" class="dashboard-action">
+        <span class="action-icon">👥</span>
+
+        <div>
+          <strong>Manage Members</strong>
+
+          <span> View and manage library members </span>
+        </div>
+      </a>
+
+      <a routerLink="/borrow" class="dashboard-action">
+        <span class="action-icon">📖</span>
+
+        <div>
+          <strong>Borrow Book</strong>
+
+          <span> Issue a book to a library member </span>
+        </div>
+      </a>
+
+      <a routerLink="/loans" class="dashboard-action">
+        <span class="action-icon">📋</span>
+
+        <div>
+          <strong>View Loans</strong>
+
+          <span> Track active and returned loans </span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- =========================
+       INFORMATION
+       ========================= -->
+
+  <section class="info-card">
+    <div class="info-icon">ℹ</div>
+
+    <div>
+      <h3>Library Management System</h3>
+
+      <p>Manage books, members and borrowing activity from one place.</p>
+    </div>
+  </section>
+</div>

@@ -20,6 +20,11 @@ export class BookForm {
   private bookService = inject(BookService);
 
   @Output() bookAdded = new EventEmitter<void>();
+  @Output() cancelled = new EventEmitter<void>();
+
+  cancel(): void {
+    this.cancelled.emit();
+  }
 
   addBook(): void {
     const book: Book = {

@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { BookList } from './books/book-list/book-list';
 import { BookForm } from './books/book-form/book-form';
 import { BookEdit } from './books/book-edit/book-edit';
@@ -8,7 +8,6 @@ import { MemberForm } from './members/member-form/member-form';
 import { MemberEdit } from './members/member-edit/member-edit';
 import { LoanList } from './loans/loan-list/loan-list';
 import { BorrowBook } from './loans/borrow-book/borrow-book';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +23,7 @@ import { RouterLink } from '@angular/router';
     LoanList,
     BorrowBook,
     RouterLink,
+    RouterLinkActive,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',

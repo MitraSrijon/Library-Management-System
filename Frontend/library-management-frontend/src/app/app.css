@@ -1,0 +1,105 @@
+.app-header {
+  background: #1f2937;
+
+  color: white;
+
+  padding: 18px 30px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header-content {
+  max-width: 1500px;
+
+  margin: 0 auto;
+}
+
+.app-header h1 {
+  margin: 0 0 15px;
+
+  font-size: 24px;
+
+  font-weight: 600;
+}
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+nav {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+nav a {
+  color: #d1d5db;
+
+  text-decoration: none;
+
+  padding: 8px 14px;
+
+  border-radius: 6px;
+
+  font-size: 14px;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+nav a:hover {
+  background: #374151;
+
+  color: white;
+}
+
+nav a.active {
+  background: #4b5563;
+
+  color: white;
+}
+
+/* =========================
+   MAIN CONTENT
+   ========================= */
+
+.app-content {
+  width: 100%;
+
+  max-width: 1500px;
+
+  margin: 0 auto;
+
+  box-sizing: border-box;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: 15px 20px;
+  }
+
+  .app-header h1 {
+    font-size: 20px;
+
+    margin-bottom: 12px;
+  }
+
+  nav {
+    flex-wrap: wrap;
+
+    gap: 5px;
+  }
+
+  nav a {
+    padding: 7px 10px;
+
+    font-size: 13px;
+  }
+}

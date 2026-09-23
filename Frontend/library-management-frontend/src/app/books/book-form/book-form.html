@@ -64,5 +64,9 @@
     }
   </div>
 
-  <button type="submit" [disabled]="bookForm.invalid">Save</button>
+  <div class="form-actions">
+    <button type="button" (click)="cancel()">Cancel</button>
+
+    <button type="submit" [disabled]="bookForm.invalid">Save</button>
+  </div>
 </form>

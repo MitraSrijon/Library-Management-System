@@ -2,11 +2,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { BookService } from '../../services/BookService';
 import { Book } from '../../models/book';
 import { BookForm } from '../book-form/book-form';
+import { BookEdit } from '../book-edit/book-edit';
 
 @Component({
   selector: 'app-book-list',
   standalone: true,
-  imports: [BookForm],
+  imports: [BookForm, BookEdit],
   templateUrl: './book-list.html',
   styleUrl: './book-list.css',
 })

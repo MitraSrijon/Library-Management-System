@@ -7,6 +7,7 @@ import com.srijon.library.exception.BookDeletionException;
 import com.srijon.library.exception.BookNotFoundException;
 import com.srijon.library.mapper.BookMapper;
 import com.srijon.library.repository.BookRepository;
+import com.srijon.library.repository.LoanRepository;
 import com.srijon.library.service.BookService;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -17,10 +18,12 @@ public class BookServiceImpl implements BookService{
 
     private final BookRepository bookRepository;
     private final BookMapper mapper;
+    private final LoanRepository loanRepository;
 
-    public BookServiceImpl(BookRepository bookRepository, BookMapper mapper){
+    public BookServiceImpl(BookRepository bookRepository, BookMapper mapper, LoanRepository loanRepository){
         this.bookRepository = bookRepository;
         this.mapper = mapper;
+        this.loanRepository = loanRepository;
     }
 
     //Logic of adding the books inside our database
@@ -100,6 +103,12 @@ public class BookServiceImpl implements BookService{
         if(borrowedCopies > 0) {
             throw new BookDeletionException(
                     "Cannot delete book because copies are currently borrowed"
+            );
+        }
+
+        if (loanRepository.existsByBookId(id)) {
+            throw new BookDeletionException(
+                    "Cannot delete book because it has loan history"
             );
         }
 

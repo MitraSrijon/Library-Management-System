@@ -1,30 +1,72 @@
-<h2>Edit Book</h2>
-
-<form (ngSubmit)="updateBook()">
+<form #bookForm="ngForm" (ngSubmit)="updateBook()">
   <div>
     <label>Title</label>
-    <input type="text" [(ngModel)]="title" name="title" />
+
+    <input type="text" [(ngModel)]="title" name="title" required #titleInput="ngModel" />
+
+    @if (titleInput.invalid && titleInput.touched) {
+      <small>Title is required.</small>
+    }
   </div>
 
   <div>
     <label>Author</label>
-    <input type="text" [(ngModel)]="author" name="author" />
+
+    <input type="text" [(ngModel)]="author" name="author" required #authorInput="ngModel" />
+
+    @if (authorInput.invalid && authorInput.touched) {
+      <small>Author is required.</small>
+    }
   </div>
 
   <div>
     <label>ISBN</label>
-    <input type="text" [(ngModel)]="isbn" name="isbn" />
+
+    <input type="text" [(ngModel)]="isbn" name="isbn" required #isbnInput="ngModel" />
+
+    @if (isbnInput.invalid && isbnInput.touched) {
+      <small>ISBN is required.</small>
+    }
   </div>
 
   <div>
     <label>Published Year</label>
-    <input type="number" [(ngModel)]="publishedYear" name="publishedYear" />
+
+    <input
+      type="number"
+      [(ngModel)]="publishedYear"
+      name="publishedYear"
+      required
+      min="1000"
+      max="2026"
+      #yearInput="ngModel"
+    />
+
+    @if (yearInput.invalid && yearInput.touched) {
+      <small>Enter a valid published year.</small>
+    }
   </div>
 
   <div>
     <label>Total Copies</label>
-    <input type="number" [(ngModel)]="totalCopies" name="totalCopies" />
+
+    <input
+      type="number"
+      [(ngModel)]="totalCopies"
+      name="totalCopies"
+      required
+      min="1"
+      #copiesInput="ngModel"
+    />
+
+    @if (copiesInput.invalid && copiesInput.touched) {
+      <small>Total copies must be at least 1.</small>
+    }
   </div>
 
-  <button type="submit">Update Book</button>
+  <div class="form-actions">
+    <button type="button" (click)="cancel()">Cancel</button>
+
+    <button type="submit" [disabled]="bookForm.invalid">Save</button>
+  </div>
 </form>

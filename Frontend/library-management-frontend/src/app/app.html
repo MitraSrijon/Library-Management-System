@@ -1,11 +1,21 @@
-<h1>Library Management System</h1>
+<header class="app-header">
+  <div class="header-content">
+    <h1>Library Management System</h1>
 
-<nav>
-  <a routerLink="/">Dashboard</a>
-  <a routerLink="/books">Books</a>
-  <a routerLink="/members">Members</a>
-  <a routerLink="/loans">Loans</a>
-  <a routerLink="/borrow">Borrow Book</a>
-</nav>
+    <nav>
+      <a routerLink="/" routerLinkActive="active"> Dashboard </a>
 
-<router-outlet></router-outlet>
+      <a routerLink="/books" routerLinkActive="active"> Books </a>
+
+      <a routerLink="/members" routerLinkActive="active"> Members </a>
+
+      <a routerLink="/loans" routerLinkActive="active"> Loans </a>
+
+      <a routerLink="/borrow" routerLinkActive="active"> Borrow Book </a>
+    </nav>
+  </div>
+</header>
+
+<main class="app-content">
+  <router-outlet></router-outlet>
+</main>

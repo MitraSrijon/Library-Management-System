@@ -20,6 +20,11 @@ export class BookEdit implements OnInit, OnChanges {
   private bookService = inject(BookService);
 
   @Output() bookUpdated = new EventEmitter<void>();
+  @Output() cancelled = new EventEmitter<void>();
+
+  cancel(): void {
+    this.cancelled.emit();
+  }
 
   ngOnInit(): void {
     this.loadBook();
