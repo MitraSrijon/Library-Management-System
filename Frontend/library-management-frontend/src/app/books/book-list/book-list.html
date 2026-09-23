@@ -64,60 +64,94 @@
     <button type="button" (click)="searchInput.value = ''; loadBooks()">Clear</button>
   </div>
 
+  <!-- Loading -->
+
+  @if (loading) {
+    <div class="state-message">
+      <p>Loading books...</p>
+    </div>
+  }
+
+  <!-- Error -->
+
+  @if (!loading && errorMessage) {
+    <div class="state-message error-message">
+      <p>{{ errorMessage }}</p>
+
+      <button type="button" class="retry-btn" (click)="loadBooks()">Try Again</button>
+    </div>
+  }
+
   <!-- Table -->
 
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Author</th>
-          <th>ISBN</th>
-          <th>Published Year</th>
-          <th>Total Copies</th>
-          <th>Available Copies</th>
-          <th class="actions-header">Actions</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        @for (book of books; track book.id) {
+  @if (!loading && !errorMessage) {
+    <div class="table-wrapper">
+      <table>
+        <thead>
           <tr>
-            <td>{{ book.id }}</td>
-
-            <td>{{ book.title }}</td>
-
-            <td>{{ book.author }}</td>
-
-            <td>{{ book.isbn }}</td>
-
-            <td>{{ book.publishedYear }}</td>
-
-            <td>{{ book.totalCopies }}</td>
-
-            <td>{{ book.availableCopies }}</td>
-
-            <td class="actions">
-              <button type="button" class="edit-btn" (click)="editBook(book.id)">Edit</button>
-
-              <button type="button" class="delete-btn" (click)="deleteBook(book.id)">Delete</button>
-            </td>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th>Published Year</th>
+            <th>Total Copies</th>
+            <th>Available Copies</th>
+            <th class="actions-header">Actions</th>
           </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+        </thead>
+
+        <tbody>
+          @for (book of books; track book.id) {
+            <tr>
+              <td>{{ book.id }}</td>
+
+              <td>{{ book.title }}</td>
+
+              <td>{{ book.author }}</td>
+
+              <td>{{ book.isbn }}</td>
+
+              <td>{{ book.publishedYear }}</td>
+
+              <td>{{ book.totalCopies }}</td>
+
+              <td>{{ book.availableCopies }}</td>
+
+              <td class="actions">
+                <button type="button" class="edit-btn" (click)="editBook(book.id)">Edit</button>
+
+                <button type="button" class="delete-btn" (click)="deleteBook(book.id)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  <!-- No Books -->
+
+  @if (!loading && !errorMessage && books.length === 0) {
+    <div class="state-message">
+      <p>No books found.</p>
+    </div>
+  }
 
   <!-- Pagination -->
 
-  <div class="pagination">
-    <button type="button" (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
+  @if (!loading && !errorMessage && books.length > 0) {
+    <div class="pagination">
+      <button type="button" (click)="previousPage()" [disabled]="currentPage === 0">
+        Previous
+      </button>
 
-    <span> Page {{ currentPage + 1 }} of {{ totalPages }} </span>
+      <span> Page {{ currentPage + 1 }} of {{ totalPages }} </span>
 
-    <button type="button" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
-      Next
-    </button>
-  </div>
+      <button type="button" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">
+        Next
+      </button>
+    </div>
+  }
 </div>

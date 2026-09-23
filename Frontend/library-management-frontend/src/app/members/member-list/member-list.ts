@@ -1,9 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { MemberService } from '../../services/MemberService';
 import { Member } from '../../models/member';
 import { MemberForm } from '../member-form/member-form';
 import { MemberEdit } from '../member-edit/member-edit';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-member-list',
@@ -19,6 +19,9 @@ export class MemberList implements OnInit {
   pageSize = 10;
   totalPages = 0;
 
+  loading = false;
+  errorMessage = '';
+
   selectedMemberId: number | null = null;
   showAddForm = false;
 
@@ -29,13 +32,20 @@ export class MemberList implements OnInit {
   }
 
   loadMembers(): void {
+    this.loading = true;
+    this.errorMessage = '';
+
     this.memberService.getAllMembers(this.currentPage, this.pageSize).subscribe({
       next: (response: any) => {
         this.members = response.content;
         this.totalPages = response.totalPages;
+        this.loading = false;
       },
       error: (error: any) => {
         console.error('Error fetching members:', error);
+
+        this.loading = false;
+        this.errorMessage = 'Unable to load members. Please try again.';
       },
     });
   }
@@ -46,12 +56,19 @@ export class MemberList implements OnInit {
       return;
     }
 
+    this.loading = true;
+    this.errorMessage = '';
+
     this.memberService.searchMembers(keyword).subscribe({
       next: (response: any) => {
         this.members = response.content;
+        this.loading = false;
       },
       error: (error: any) => {
         console.error('Error searching members:', error);
+
+        this.loading = false;
+        this.errorMessage = 'Unable to search members. Please try again.';
       },
     });
   }

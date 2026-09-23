@@ -18,6 +18,9 @@ export class BookList implements OnInit {
   pageSize = 10;
   totalPages = 0;
 
+  loading = false;
+  errorMessage = '';
+
   private bookService = inject(BookService);
 
   selectedBookId: number | null = null;
@@ -29,13 +32,20 @@ export class BookList implements OnInit {
   }
 
   loadBooks(): void {
+    this.loading = true;
+    this.errorMessage = '';
+
     this.bookService.getAllBooks(this.currentPage, this.pageSize).subscribe({
       next: (response: any) => {
         this.books = response.content;
         this.totalPages = response.totalPages;
+        this.loading = false;
       },
       error: (error: any) => {
         console.error('Error fetching books:', error);
+
+        this.loading = false;
+        this.errorMessage = 'Unable to load books. Please try again.';
       },
     });
   }
@@ -60,12 +70,19 @@ export class BookList implements OnInit {
       return;
     }
 
+    this.loading = true;
+    this.errorMessage = '';
+
     this.bookService.searchBooks(keyword).subscribe({
       next: (response: any) => {
         this.books = response.content;
+        this.loading = false;
       },
       error: (error: any) => {
         console.error('Error searching books:', error);
+
+        this.loading = false;
+        this.errorMessage = 'Unable to search books. Please try again.';
       },
     });
   }

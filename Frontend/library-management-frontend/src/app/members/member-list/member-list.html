@@ -8,6 +8,8 @@
     <button type="button" class="add-member-btn" (click)="showAddForm = true">+ Add Member</button>
   </div>
 
+  <!-- Add Member -->
+
   @if (showAddForm) {
     <div class="modal-backdrop">
       <div class="modal">
@@ -25,6 +27,8 @@
       </div>
     </div>
   }
+
+  <!-- Edit Member -->
 
   @if (selectedMemberId !== null) {
     <div class="modal-backdrop">
@@ -45,6 +49,8 @@
     </div>
   }
 
+  <!-- Search -->
+
   <div class="search-box">
     <input
       type="text"
@@ -56,52 +62,88 @@
     <button type="button" (click)="searchInput.value = ''; loadMembers()">Clear</button>
   </div>
 
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Membership Date</th>
-          <th class="actions-header">Actions</th>
-        </tr>
-      </thead>
+  <!-- Loading -->
 
-      <tbody>
-        @for (member of members; track member.id) {
+  @if (loading) {
+    <div class="state-message">
+      <p>Loading members...</p>
+    </div>
+  }
+
+  <!-- Error -->
+
+  @if (!loading && errorMessage) {
+    <div class="state-message error-message">
+      <p>{{ errorMessage }}</p>
+
+      <button type="button" class="retry-btn" (click)="loadMembers()">Try Again</button>
+    </div>
+  }
+
+  <!-- Table -->
+
+  @if (!loading && !errorMessage) {
+    <div class="table-wrapper">
+      <table>
+        <thead>
           <tr>
-            <td>{{ member.id }}</td>
-
-            <td>{{ member.name }}</td>
-
-            <td>{{ member.email }}</td>
-
-            <td>{{ member.phone }}</td>
-
-            <td>{{ member.membershipDate | date: 'dd MMM yyyy' }}</td>
-
-            <td class="actions">
-              <button type="button" class="edit-btn" (click)="editMember(member.id)">Edit</button>
-
-              <button type="button" class="delete-btn" (click)="deleteMember(member.id)">
-                Delete
-              </button>
-            </td>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Membership Date</th>
+            <th class="actions-header">Actions</th>
           </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+        </thead>
 
-  <div class="pagination">
-    <button type="button" (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
+        <tbody>
+          @for (member of members; track member.id) {
+            <tr>
+              <td>{{ member.id }}</td>
 
-    <span> Page {{ currentPage + 1 }} of {{ totalPages }} </span>
+              <td>{{ member.name }}</td>
 
-    <button type="button" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">
-      Next
-    </button>
-  </div>
+              <td>{{ member.email }}</td>
+
+              <td>{{ member.phone }}</td>
+
+              <td>{{ member.membershipDate | date: 'dd MMM yyyy' }}</td>
+
+              <td class="actions">
+                <button type="button" class="edit-btn" (click)="editMember(member.id)">Edit</button>
+
+                <button type="button" class="delete-btn" (click)="deleteMember(member.id)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  <!-- No Members -->
+
+  @if (!loading && !errorMessage && members.length === 0) {
+    <div class="state-message">
+      <p>No members found.</p>
+    </div>
+  }
+
+  <!-- Pagination -->
+
+  @if (!loading && !errorMessage && members.length > 0) {
+    <div class="pagination">
+      <button type="button" (click)="previousPage()" [disabled]="currentPage === 0">
+        Previous
+      </button>
+
+      <span> Page {{ currentPage + 1 }} of {{ totalPages }} </span>
+
+      <button type="button" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">
+        Next
+      </button>
+    </div>
+  }
 </div>
